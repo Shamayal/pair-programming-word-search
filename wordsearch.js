@@ -1,40 +1,36 @@
-let result = false;  
 const transpose = function(matrix) {
-    let newArray = [];
-    for (let i = 0; i < matrix[0].length; i++) {
-      newArray.push([]);
-    }
-  
-    for (let array of matrix) {
-      for (const [j, num] of array.entries()) {
-        newArray[j].push(num);
-      }
-    }
-    return newArray;
-  };
-
-const wordSearch = (letters, word) => { 
-  if (letters.length === 0){
-    return false;
+  let newArray = [];
+  for (let i = 0; i < matrix[0].length; i++) {
+    newArray.push([]);
   }
-
-  let verticalString = "";
-  let transposedString = transpose(letters)
-  for (letter of transposedString) {
-    verticalString += letter;
-    if (verticalString.includes(word)) {
-      result = true;
+  
+  for (let array of matrix) {
+    for (const [j, num] of array.entries()) {
+      newArray[j].push(num);
     }
   }
-
-  const horizontalJoin = letters.map(ls => ls.join(''))
-    for (l of horizontalJoin) {
-        if (l.includes(word)) {
-          result = true;
-        } 
-    } 
-  
-  return result;
+  return newArray;
 };
 
-module.exports = wordSearch
+const wordSearch = (letters, word) => {
+  if (letters.length === 0) {
+    return false;
+  }
+  // horizontal search
+  const horizontalJoin = letters.map(ls => ls.join(''));
+  for (let l of horizontalJoin) {
+    if (l.includes(word)) return true;
+  }
+  
+  // vertical search
+  let transposedString = transpose(letters);
+
+  const verticalJoin = transposedString.map(ls => ls.join(''));
+  for (let l of verticalJoin) {
+    if (l.includes(word)) return true;
+  }
+  
+  return false;
+};
+
+module.exports = wordSearch;
